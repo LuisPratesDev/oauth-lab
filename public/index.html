@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="description"
+        content="OAuth Lab - Laboratório de autenticação com Google e GitHub."
+    >
+
+    <title>OAuth Lab</title>
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <main class="page">
+
+        <section class="card">
+
+            <!-- Brand -->
+            <header class="brand">
+
+                <div class="brand-icon">
+                    ◆
+                </div>
+
+                <div>
+                    <span class="brand-name">
+                        OAuth Lab
+                    </span>
+
+                    <span class="brand-subtitle">
+                        Cloudflare Authentication
+                    </span>
+                </div>
+
+            </header>
+
+
+            <!-- Hero -->
+            <section class="hero">
+
+                <span class="badge">
+                    <span class="status-dot"></span>
+                    <span id="system-status">
+                        Sistema online
+                    </span>
+                </span>
+
+                <h1>
+                    Autenticação simples.
+                    <span>Segurança real.</span>
+                </h1>
+
+                <p>
+                    Um laboratório de autenticação utilizando
+                    OAuth 2.0, PKCE e sessões protegidas.
+                </p>
+
+            </section>
+
+
+            <!-- Authentication -->
+            <section class="auth-container">
+
+                <!-- Loading state -->
+                <div
+                    id="loading-state"
+                    class="auth-state"
+                >
+
+                    <div class="loader"></div>
+
+                    <p>
+                        Verificando sua sessão...
+                    </p>
+
+                </div>
+
+
+                <!-- Logged out state -->
+                <div
+                    id="logged-out-state"
+                    class="auth-state"
+                    hidden
+                >
+
+                    <div class="session-header">
+
+                        <div class="session-icon">
+                            →
+                        </div>
+
+                        <div>
+                            <h2>
+                                Acesse sua conta
+                            </h2>
+
+                            <p>
+                                Escolha um provedor para continuar.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="login-area">
+
+                        <button
+                            class="login-button google"
+                            type="button"
+                            data-provider="google"
+                        >
+                            <span class="provider-icon">
+                                G
+                            </span>
+
+                            <span>
+                                Continuar com Google
+                            </span>
+                        </button>
+
+
+                        <button
+                            class="login-button github"
+                            type="button"
+                            data-provider="github"
+                        >
+                            <span class="provider-icon github-icon">
+                                ●
+                            </span>
+
+                            <span>
+                                Continuar com GitHub
+                            </span>
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Logged in state -->
+                <div
+                    id="logged-in-state"
+                    class="auth-state"
+                    hidden
+                >
+
+                    <div class="session-header">
+
+                        <div class="session-icon logged">
+                            ✓
+                        </div>
+
+                        <div>
+                            <h2>
+                                Você está conectado
+                            </h2>
+
+                            <p>
+                                Sua sessão está ativa.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="user-card">
+
+                        <div class="avatar" id="user-avatar">
+                            ?
+                        </div>
+
+                        <div class="user-info">
+
+                            <strong id="user-name">
+                                Usuário
+                            </strong>
+
+                            <span id="user-email">
+                                —
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="session-details">
+
+                        <div class="detail">
+
+                            <span class="detail-label">
+                                Provedor
+                            </span>
+
+                            <span
+                                class="detail-value"
+                                id="user-provider"
+                            >
+                                —
+                            </span>
+
+                        </div>
+
+
+                        <div class="detail">
+
+                            <span class="detail-label">
+                                Sessão
+                            </span>
+
+                            <span class="detail-value active">
+                                Ativa
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <form
+                        id="logout-form"
+                        class="logout-area"
+                    >
+                        <button
+                            id="logout"
+                            class="logout-button"
+                            type="submit"
+                        >
+                            Encerrar sessão
+                        </button>
+                    </form>
+
+                </div>
+
+                <!-- Error state -->
+                <div
+                    id="error-state"
+                    class="auth-state"
+                    hidden
+                >
+
+                    <div class="error-icon">
+                        !
+                    </div>
+
+                    <h2>
+                        Não foi possível consultar a sessão
+                    </h2>
+
+                    <p id="error-message">
+                        Ocorreu um erro ao consultar o servidor.
+                    </p>
+
+                    <button
+                        id="retry"
+                        class="retry-button"
+                        type="button"
+                    >
+                        Tentar novamente
+                    </button>
+
+                </div>
+
+            </section>
+
+
+            <!-- Security features -->
+            <div class="security-info">
+                <div class="security-item">
+                    <span class="security-icon">✓</span>
+                    <span>OAuth 2.0 + PKCE</span>
+                </div>
+
+                <div class="security-item">
+                    <span class="security-icon">✓</span>
+                    <span>Sessões protegidas</span>
+                </div>
+
+                <div class="security-item">
+                    <span class="security-icon">✓</span>
+                    <span>Cloudflare D1</span>
+                </div>
+            </div>
+            </section>
+
+
+            <!-- Footer -->
+            <footer>
+
+                <span>
+                    OAuth Lab
+                </span>
+
+                <span class="separator">
+                    •
+                </span>
+
+                <span>
+                    Cloudflare Pages
+                </span>
+
+            </footer>
+
+        </section>
+
+    </main>
+
+
+    <script src="/app.js"></script>
+
+</body>
+
+</html>
+
