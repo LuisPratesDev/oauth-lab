@@ -1,0 +1,697 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg: #08080d;
+    --bg-secondary: #101018;
+
+    --card: rgba(20, 20, 31, 0.78);
+    --card-border: rgba(255, 255, 255, 0.08);
+
+    --text: #f5f5f7;
+    --text-secondary: #a5a5b3;
+    --text-muted: #707080;
+
+    --primary: #8b5cf6;
+    --primary-light: #a78bfa;
+    --primary-dark: #6d28d9;
+
+    --success: #34d399;
+    --danger: #f87171;
+
+    --google: #ffffff;
+    --github: #18181b;
+
+    --shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+}
+
+html {
+    min-height: 100%;
+    background: var(--bg);
+}
+
+body {
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 32px 20px;
+
+    color: var(--text);
+
+    font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    background:
+        radial-gradient(
+            circle at 15% 20%,
+            rgba(139, 92, 246, 0.16),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 85% 80%,
+            rgba(109, 40, 217, 0.12),
+            transparent 30%
+        ),
+        var(--bg);
+}
+
+button {
+    font: inherit;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+/* =========================
+   CONTAINER
+========================= */
+
+.auth-container {
+    width: 100%;
+    max-width: 470px;
+}
+
+.auth-state {
+    width: 100%;
+}
+
+.card {
+    position: relative;
+
+    padding: 38px;
+
+    border: 1px solid var(--card-border);
+    border-radius: 24px;
+
+    background: var(--card);
+
+    box-shadow: var(--shadow);
+
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+/* =========================
+   BRAND
+========================= */
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    margin-bottom: 28px;
+}
+
+.brand-icon {
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 12px;
+
+    color: white;
+
+    font-size: 18px;
+    font-weight: 800;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--primary-light),
+            var(--primary-dark)
+        );
+
+    box-shadow:
+        0 8px 25px rgba(139, 92, 246, 0.25);
+}
+
+.brand-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.brand-name {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+.brand-subtitle {
+    color: var(--text-muted);
+
+    font-size: 12px;
+}
+
+/* =========================
+   HERO
+========================= */
+
+.hero {
+    margin-bottom: 28px;
+}
+
+.hero h1 {
+    margin-bottom: 10px;
+
+    font-size: clamp(28px, 6vw, 36px);
+    line-height: 1.1;
+    letter-spacing: -0.04em;
+}
+
+.hero p {
+    color: var(--text-secondary);
+
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+/* =========================
+   LOGIN
+========================= */
+
+.login-area {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.login-button {
+    width: 100%;
+    min-height: 54px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+
+    padding: 0 18px;
+
+    border: 1px solid transparent;
+    border-radius: 14px;
+
+    cursor: pointer;
+
+    font-size: 14px;
+    font-weight: 650;
+
+    transition:
+        transform 160ms ease,
+        box-shadow 160ms ease,
+        border-color 160ms ease,
+        background 160ms ease;
+}
+
+.login-button:hover {
+    transform: translateY(-2px);
+}
+
+.login-button:active {
+    transform: translateY(0);
+}
+
+.login-button:focus-visible,
+.logout-button:focus-visible,
+.retry-button:focus-visible {
+    outline: 2px solid var(--primary-light);
+    outline-offset: 3px;
+}
+
+/* Google */
+
+.google-button {
+    color: #202124;
+
+    background: var(--google);
+
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.18);
+}
+
+.google-button:hover {
+    box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.25);
+}
+
+/* GitHub */
+
+.github-button {
+    color: #ffffff;
+
+    border-color: rgba(255, 255, 255, 0.12);
+
+    background: var(--github);
+}
+
+.github-button:hover {
+    border-color: rgba(255, 255, 255, 0.22);
+
+    box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.3);
+}
+
+.provider-icon {
+    width: 20px;
+    height: 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    font-size: 15px;
+    font-weight: 800;
+}
+
+/* =========================
+   SECURITY INFO
+========================= */
+
+.security-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 14px;
+
+    margin-top: 22px;
+    padding: 14px 16px;
+
+    border: 1px solid rgba(139, 92, 246, 0.14);
+    border-radius: 13px;
+
+    background: rgba(139, 92, 246, 0.05);
+
+    color: var(--text-secondary);
+
+    font-size: 11px;
+}
+
+.security-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    white-space: nowrap;
+}
+
+.security-icon {
+    flex-shrink: 0;
+
+    color: var(--success);
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+/* =========================
+   LOADING
+========================= */
+
+.loading-state {
+    text-align: center;
+}
+
+.loader {
+    width: 42px;
+    height: 42px;
+
+    margin: 8px auto 22px;
+
+    border: 3px solid rgba(255, 255, 255, 0.08);
+    border-top-color: var(--primary-light);
+
+    border-radius: 50%;
+
+    animation: spin 0.8s linear infinite;
+}
+
+.loading-state h2 {
+    margin-bottom: 8px;
+
+    font-size: 20px;
+}
+
+.loading-state p {
+    color: var(--text-secondary);
+
+    font-size: 14px;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* =========================
+   LOGGED IN
+========================= */
+
+.session-header {
+    margin-bottom: 24px;
+}
+
+.eyebrow {
+    display: inline-block;
+
+    margin-bottom: 10px;
+
+    color: var(--primary-light);
+
+    font-size: 10px;
+    font-weight: 700;
+
+    letter-spacing: 0.12em;
+}
+
+.session-header h1 {
+    margin-bottom: 8px;
+
+    font-size: 30px;
+    line-height: 1.1;
+
+    letter-spacing: -0.04em;
+}
+
+.session-header p {
+    color: var(--text-secondary);
+
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+/* User card */
+
+.user-card {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    padding: 18px;
+
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 17px;
+
+    background: rgba(255, 255, 255, 0.035);
+}
+
+.avatar {
+    width: 52px;
+    height: 52px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 15px;
+
+    color: white;
+
+    font-size: 20px;
+    font-weight: 700;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--primary-light),
+            var(--primary-dark)
+        );
+
+    box-shadow:
+        0 8px 25px rgba(139, 92, 246, 0.2);
+}
+
+.user-info {
+    min-width: 0;
+}
+
+.user-info h2 {
+    overflow: hidden;
+
+    margin-bottom: 4px;
+
+    color: var(--text);
+
+    font-size: 16px;
+    font-weight: 700;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.user-info p {
+    overflow: hidden;
+
+    color: var(--text-secondary);
+
+    font-size: 13px;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Session status */
+
+.session-status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    margin: 17px 0 20px;
+
+    color: var(--text-muted);
+
+    font-size: 12px;
+}
+
+.status-dot {
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: var(--success);
+
+    box-shadow:
+        0 0 10px rgba(52, 211, 153, 0.6);
+}
+
+.status-separator {
+    opacity: 0.4;
+}
+
+/* =========================
+   LOGOUT
+========================= */
+
+.logout-area {
+    margin-top: 0;
+    padding-top: 0;
+
+    border-top: 0;
+}
+
+.logout-button {
+    width: 100%;
+    min-height: 46px;
+
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 13px;
+
+    color: var(--text-secondary);
+
+    background: rgba(255, 255, 255, 0.035);
+
+    cursor: pointer;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    transition:
+        background 160ms ease,
+        border-color 160ms ease,
+        color 160ms ease,
+        transform 160ms ease;
+}
+
+.logout-button:hover {
+    color: var(--text);
+
+    border-color: rgba(248, 113, 113, 0.28);
+
+    background: rgba(248, 113, 113, 0.06);
+
+    transform: translateY(-1px);
+}
+
+.logout-button:disabled {
+    opacity: 0.6;
+
+    cursor: wait;
+
+    transform: none;
+}
+
+/* =========================
+   ERROR
+========================= */
+
+.error-state {
+    text-align: center;
+}
+
+.error-icon {
+    width: 58px;
+    height: 58px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin: 0 auto 20px;
+
+    border: 1px solid rgba(248, 113, 113, 0.2);
+    border-radius: 18px;
+
+    color: var(--danger);
+
+    font-size: 24px;
+
+    background: rgba(248, 113, 113, 0.08);
+}
+
+.error-state h2 {
+    margin-bottom: 8px;
+
+    font-size: 21px;
+}
+
+.error-state p {
+    margin-bottom: 22px;
+
+    color: var(--text-secondary);
+
+    font-size: 14px;
+    line-height: 1.55;
+}
+
+.retry-button {
+    width: 100%;
+    min-height: 48px;
+
+    border: 0;
+    border-radius: 13px;
+
+    color: white;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--primary),
+            var(--primary-dark)
+        );
+
+    cursor: pointer;
+
+    font-size: 13px;
+    font-weight: 650;
+
+    box-shadow:
+        0 8px 25px rgba(109, 40, 217, 0.25);
+
+    transition:
+        transform 160ms ease,
+        box-shadow 160ms ease;
+}
+
+.retry-button:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 12px 30px rgba(109, 40, 217, 0.35);
+}
+
+.retry-button:active {
+    transform: translateY(0);
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+    margin-top: 18px;
+
+    color: var(--text-muted);
+
+    font-size: 11px;
+
+    text-align: center;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 520px) {
+    body {
+        padding: 20px 14px;
+    }
+
+    .card {
+        padding: 27px 21px;
+
+        border-radius: 20px;
+    }
+
+    .hero h1 {
+        font-size: 29px;
+    }
+
+    .session-header h1 {
+        font-size: 25px;
+    }
+
+    .security-info {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 9px;
+    }
+
+    .user-card {
+        padding: 15px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
