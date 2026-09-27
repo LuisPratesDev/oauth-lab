@@ -479,7 +479,7 @@ export async function onRequestGet(context) {
             headers: [
                 [
                     "Location",
-                    "/"
+                    baseUrl
                 ],
                 [
                     "Set-Cookie",
