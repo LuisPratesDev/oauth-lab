@@ -18,3 +18,13 @@
 - [x] Tokens e segredos não aparecem no HTML, nas URLs salvas, no armazenamento Web ou nos registros.
 - [x] A dupla consegue explicar por que os arquivos estáticos permanecem públicos.
 - [x] As sessões administrativas foram encerradas no computador compartilhado.
+
+---
+
+## Assinaturas do Desenvolvedor
+
+| Integrante | Nome completo                | Turma  | Data       |
+|------------|------------------------------|--------|------------|
+|     1      | Luis Fernando Prates Santana |  2ESBN | 27/09/2026 |
+
+Responsável pela rotação dos Client Secrets: Luis Fernando Prates Santana
