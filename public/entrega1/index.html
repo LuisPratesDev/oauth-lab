@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex">
+
+    <title>Entrega 1 — Evidências | OAuth Lab</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            padding: 32px 20px;
+
+            color: #f5f5f7;
+
+            font-family:
+                Inter,
+                ui-sans-serif,
+                system-ui,
+                -apple-system,
+                "Segoe UI",
+                sans-serif;
+
+            background:
+                radial-gradient(
+                    circle at 15% 20%,
+                    rgba(139, 92, 246, 0.16),
+                    transparent 30%
+                ),
+                #08080d;
+        }
+
+        .card {
+            width: 100%;
+            max-width: 560px;
+
+            padding: 32px;
+
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+
+            background: rgba(20, 20, 31, 0.78);
+
+            box-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            margin-bottom: 24px;
+        }
+
+        .brand-icon {
+            width: 42px;
+            height: 42px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+
+            border-radius: 12px;
+
+            font-size: 18px;
+
+            background: linear-gradient(135deg, #a78bfa, #6d28d9);
+        }
+
+        h1 {
+            margin-bottom: 6px;
+
+            font-size: 20px;
+            letter-spacing: -0.02em;
+        }
+
+        .meta {
+            margin-bottom: 24px;
+
+            color: #a5a5b3;
+
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .meta strong {
+            color: #f5f5f7;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        li a {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+
+            padding: 13px 16px;
+
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 12px;
+
+            color: #f5f5f7;
+
+            background: rgba(255, 255, 255, 0.035);
+
+            font-size: 14px;
+
+            text-decoration: none;
+
+            transition:
+                border-color 160ms ease,
+                background 160ms ease,
+                transform 160ms ease;
+        }
+
+        li + li {
+            margin-top: 10px;
+        }
+
+        li a:hover {
+            border-color: rgba(139, 92, 246, 0.4);
+
+            background: rgba(139, 92, 246, 0.08);
+
+            transform: translateY(-1px);
+        }
+
+        li a:focus-visible {
+            outline: 2px solid #a78bfa;
+
+            outline-offset: 3px;
+        }
+
+        .name {
+            overflow: hidden;
+
+            text-overflow: ellipsis;
+
+            white-space: nowrap;
+        }
+
+        .tag {
+            flex-shrink: 0;
+
+            padding: 3px 9px;
+
+            border-radius: 999px;
+
+            color: #a78bfa;
+
+            background: rgba(139, 92, 246, 0.12);
+
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        footer {
+            margin-top: 22px;
+
+            color: #707080;
+
+            font-size: 12px;
+
+            text-align: center;
+        }
+
+        footer a {
+            color: #a5a5b3;
+
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            color: #f5f5f7;
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="card">
+
+        <header class="brand">
+
+            <div class="brand-icon" aria-hidden="true">🔐</div>
+
+            <h1>Entrega 1 — Evidências</h1>
+
+        </header>
+
+
+        <p class="meta">
+            <strong>Luis Fernando Prates Santana</strong> — 2ESBN<br>
+            OAuth Lab · Cloudflare Pages · <strong>https://oauth-lab.pages.dev</strong>
+        </p>
+
+
+        <ul>
+            <li>
+                <a href="01-pages-configuracao.pdf">
+                    <span class="name">01-pages-configuracao.pdf</span>
+                    <span class="tag">PDF</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="02-google-retorno.txt">
+                    <span class="name">02-google-retorno.txt</span>
+                    <span class="tag">TXT</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="03-github-retorno.txt">
+                    <span class="name">03-github-retorno.txt</span>
+                    <span class="tag">TXT</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="04-d1-esquema.txt">
+                    <span class="name">04-d1-esquema.txt</span>
+                    <span class="tag">TXT</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="05-inicio-login-google.pdf">
+                    <span class="name">05-inicio-login-google.pdf</span>
+                    <span class="tag">PDF</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="06-inicio-login-github.pdf">
+                    <span class="name">06-inicio-login-github.pdf</span>
+                    <span class="tag">PDF</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="07-testes-falha.md">
+                    <span class="name">07-testes-falha.md</span>
+                    <span class="tag">MD</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="08-aceitacao.md">
+                    <span class="name">08-aceitacao.md</span>
+                    <span class="tag">MD</span>
+                </a>
+            </li>
+        </ul>
+
+
+        <footer>
+            <a href="/">← Voltar ao OAuth Lab</a>
+        </footer>
+
+    </main>
+
+</body>
+
+</html>
