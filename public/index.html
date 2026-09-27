@@ -9,8 +9,15 @@
         name="description"
         content="OAuth Lab - Laboratório de autenticação com Google e GitHub."
     >
+    <meta name="color-scheme" content="dark">
+    <meta name="theme-color" content="#08080d">
 
     <title>OAuth Lab</title>
+
+    <link
+        rel="icon"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%238b5cf6'/%3E%3Cpath d='M50 16 84 50 50 84 16 50Z' fill='%23fff'/%3E%3C/svg%3E"
+    >
 
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -24,18 +31,15 @@
             <!-- Brand -->
             <header class="brand">
 
-                <div class="brand-icon">
-                    ◆
+                <div class="brand-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                    </svg>
                 </div>
 
-                <div>
-                    <span class="brand-name">
-                        OAuth Lab
-                    </span>
-
-                    <span class="brand-subtitle">
-                        Cloudflare Authentication
-                    </span>
+                <div class="brand-text">
+                    <span class="brand-name">OAuth Lab</span>
+                    <span class="brand-subtitle">Cloudflare Authentication</span>
                 </div>
 
             </header>
@@ -44,16 +48,14 @@
             <!-- Hero -->
             <section class="hero">
 
-                <span class="badge">
-                    <span class="status-dot"></span>
-                    <span id="system-status">
-                        Sistema online
-                    </span>
+                <span class="badge" role="status">
+                    <span class="status-dot" aria-hidden="true"></span>
+                    <span id="system-status">Sistema online</span>
                 </span>
 
                 <h1>
                     Autenticação simples.
-                    <span>Segurança real.</span>
+                    <span class="highlight">Segurança real.</span>
                 </h1>
 
                 <p>
@@ -65,44 +67,28 @@
 
 
             <!-- Authentication -->
-            <section class="auth-container">
+            <section class="auth-container" aria-live="polite">
 
                 <!-- Loading state -->
-                <div
-                    id="loading-state"
-                    class="auth-state"
-                >
+                <div id="loading-state" class="auth-state loading-state" role="status">
 
-                    <div class="loader"></div>
+                    <div class="loader" aria-hidden="true"></div>
 
-                    <p>
-                        Verificando sua sessão...
-                    </p>
+                    <p>Verificando sua sessão...</p>
 
                 </div>
 
 
                 <!-- Logged out state -->
-                <div
-                    id="logged-out-state"
-                    class="auth-state"
-                    hidden
-                >
+                <div id="logged-out-state" class="auth-state" hidden>
 
                     <div class="session-header">
 
-                        <div class="session-icon">
-                            →
-                        </div>
+                        <div class="session-icon" aria-hidden="true">→</div>
 
                         <div>
-                            <h2>
-                                Acesse sua conta
-                            </h2>
-
-                            <p>
-                                Escolha um provedor para continuar.
-                            </p>
+                            <h2>Acesse sua conta</h2>
+                            <p>Escolha um provedor para continuar.</p>
                         </div>
 
                     </div>
@@ -115,13 +101,14 @@
                             type="button"
                             data-provider="google"
                         >
-                            <span class="provider-icon">
-                                G
-                            </span>
+                            <svg class="provider-icon" viewBox="0 0 48 48" aria-hidden="true">
+                                <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+                                <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+                                <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+                                <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+                            </svg>
 
-                            <span>
-                                Continuar com Google
-                            </span>
+                            <span>Continuar com Google</span>
                         </button>
 
 
@@ -130,13 +117,11 @@
                             type="button"
                             data-provider="github"
                         >
-                            <span class="provider-icon github-icon">
-                                ●
-                            </span>
+                            <svg class="provider-icon" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                                <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+                            </svg>
 
-                            <span>
-                                Continuar com GitHub
-                            </span>
+                            <span>Continuar com GitHub</span>
                         </button>
 
                     </div>
@@ -145,26 +130,15 @@
 
 
                 <!-- Logged in state -->
-                <div
-                    id="logged-in-state"
-                    class="auth-state"
-                    hidden
-                >
+                <div id="logged-in-state" class="auth-state" hidden>
 
                     <div class="session-header">
 
-                        <div class="session-icon logged">
-                            ✓
-                        </div>
+                        <div class="session-icon logged" aria-hidden="true">✓</div>
 
                         <div>
-                            <h2>
-                                Você está conectado
-                            </h2>
-
-                            <p>
-                                Sua sessão está ativa.
-                            </p>
+                            <h2>Você está conectado</h2>
+                            <p>Sua sessão está ativa.</p>
                         </div>
 
                     </div>
@@ -172,62 +146,32 @@
 
                     <div class="user-card">
 
-                        <div class="avatar" id="user-avatar">
-                            ?
-                        </div>
+                        <div class="avatar" id="user-avatar" aria-hidden="true">?</div>
 
                         <div class="user-info">
-
-                            <strong id="user-name">
-                                Usuário
-                            </strong>
-
-                            <span id="user-email">
-                                —
-                            </span>
-
+                            <strong id="user-name">Usuário</strong>
+                            <span id="user-email">—</span>
                         </div>
 
                     </div>
 
 
-                    <div class="session-details">
+                    <dl class="session-details">
 
                         <div class="detail">
-
-                            <span class="detail-label">
-                                Provedor
-                            </span>
-
-                            <span
-                                class="detail-value"
-                                id="user-provider"
-                            >
-                                —
-                            </span>
-
+                            <dt>Provedor</dt>
+                            <dd id="user-provider">—</dd>
                         </div>
-
 
                         <div class="detail">
-
-                            <span class="detail-label">
-                                Sessão
-                            </span>
-
-                            <span class="detail-value active">
-                                Ativa
-                            </span>
-
+                            <dt>Sessão</dt>
+                            <dd class="detail-value active">Ativa</dd>
                         </div>
 
-                    </div>
+                    </dl>
 
 
-                    <form
-                        id="logout-form"
-                        class="logout-area"
-                    >
+                    <form id="logout-form" class="logout-area">
                         <button
                             id="logout"
                             class="logout-button"
@@ -239,22 +183,15 @@
 
                 </div>
 
+
                 <!-- Error state -->
-                <div
-                    id="error-state"
-                    class="auth-state"
-                    hidden
-                >
+                <div id="error-state" class="auth-state error-state" hidden>
 
-                    <div class="error-icon">
-                        !
-                    </div>
+                    <div class="error-icon" aria-hidden="true">!</div>
 
-                    <h2>
-                        Não foi possível consultar a sessão
-                    </h2>
+                    <h2>Não foi possível consultar a sessão</h2>
 
-                    <p id="error-message">
+                    <p id="error-message" role="alert">
                         Ocorreu um erro ao consultar o servidor.
                     </p>
 
@@ -272,47 +209,43 @@
 
 
             <!-- Security features -->
-            <div class="security-info">
-                <div class="security-item">
-                    <span class="security-icon">✓</span>
-                    <span>OAuth 2.0 + PKCE</span>
-                </div>
+            <footer class="security-info">
 
-                <div class="security-item">
-                    <span class="security-icon">✓</span>
-                    <span>Sessões protegidas</span>
-                </div>
+                <ul class="security-list">
+                    <li class="security-item">
+                        <span class="security-icon" aria-hidden="true">✓</span>
+                        OAuth 2.0 + PKCE
+                    </li>
 
-                <div class="security-item">
-                    <span class="security-icon">✓</span>
-                    <span>Cloudflare D1</span>
-                </div>
-            </div>
-            </section>
+                    <li class="security-item">
+                        <span class="security-icon" aria-hidden="true">✓</span>
+                        Sessões protegidas
+                    </li>
 
-            </section>
-        </main>
+                    <li class="security-item">
+                        <span class="security-icon" aria-hidden="true">✓</span>
+                        Cloudflare D1
+                    </li>
+                </ul>
 
-        <!-- Footer -->
-        <footer>
+            </footer>
 
-            <span>
-                OAuth Lab
-            </span>
+        </section>
 
-            <span class="separator">
-                •
-            </span>
 
-            <span>
-                Cloudflare Pages
-            </span>
+        <!-- Page footer -->
+        <footer class="page-footer">
+
+            <span>OAuth Lab</span>
+            <span class="separator" aria-hidden="true">•</span>
+            <span>Cloudflare Pages</span>
 
         </footer>
+
+    </main>
 
     <script src="/app.js"></script>
 
 </body>
 
 </html>
-
