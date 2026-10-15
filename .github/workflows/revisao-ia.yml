@@ -5,13 +5,15 @@ on:
     types: [opened, synchronize]
 
 # Permissões mínimas: o GITHUB_TOKEN padrão pode ser largo demais.
-# contents: read -> ler o repositório para montar o diff
+# contents: read        -> ler o repositório e montar o diff
+# pull-requests: write  -> publicar o comentário da revisão no PR
 #
-# Tarefa 3, item 3: este commit REMOVE "pull-requests: write" de propósito
-# para registrar o erro "Resource not accessible by integration" no passo
-# "Comenta no PR". O commit seguinte restaura a permissão.
+# Tarefa 3, item 3: a permissão foi removida em um commit e restaurada no
+# seguinte para registrar o erro "Resource not accessible by integration"
+# no passo "Comenta no PR".
 permissions:
   contents: read
+  pull-requests: write
 
 jobs:
   revisar:
