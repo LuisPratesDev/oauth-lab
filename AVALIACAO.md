@@ -34,10 +34,11 @@ SQLite local*.
 
 | Evidência | Link / conteúdo |
 |---|---|
-| Execução VERDE (push) | ⬜ link da run do commit `589c09c` |
-| Execução VERMELHA (push) | ⬜ link da run do commit `c0fef1f` |
-| Linha do log com o erro | `Parse error near line 10: near "CREATE": syntax error` |
+| Execução VERMELHA (push) | [runs/38796671428](https://github.com/LuisPratesDev/oauth-lab/actions/runs/38796671428) — commit `c0fef1f` |
+| Execução VERDE (push) | [runs/38796784059](https://github.com/LuisPratesDev/oauth-lab/actions/runs/38796784059) — commit `589c09c` |
+| Linha do log com o erro | `Parse error near line 10: near "CREATE": syntax error` (job `verificar` → step *Aplica as migrações D1 em um SQLite local*, run vermelha) |
 | Commit que corrige | `589c09c` — `fix(ci): corrige a sintaxe da migracao 0001 e libera a execucao verde` |
+| PR do workflow | [#2](https://github.com/LuisPratesDev/oauth-lab/pull/2) |
 
 **Ajuste consciente no esqueleto:** o padrão original era `GOCSPX-`, mas o
 próprio `ci.yml` contém esse texto — a busca acusaria o arquivo do workflow e a
@@ -63,16 +64,23 @@ branch padrão):
 
 | Evidência | Link / conteúdo |
 |---|---|
-| PR BLOQUEADO | ⬜ link do PR da branch `migracao-d1` no commit `6a9903e` (check `verificar` vermelho, merge bloqueado) |
-| PR LIBERADO | ⬜ link do mesmo PR depois do commit `2f25045` (check verde, merge liberado) |
-| `git push` direto na `main` recusado | ⬜ colar a saída (veja o roteiro em `INSTRUCOES.md`) |
+| PR BLOQUEADO | [#3](https://github.com/LuisPratesDev/oauth-lab/pull/3) no commit `6a9903e` — `mergeStateStatus: BLOCKED`, check `verificar` vermelho |
+| PR LIBERADO | o mesmo [#3](https://github.com/LuisPratesDev/oauth-lab/pull/3) depois do commit `2f25045` — `verificar` verde (pass) e merge liberado |
+| `git push` direto na `main` recusado | saída abaixo |
 
-Saída esperada da recusa:
+Saída real da recusa (`git push origin main`):
 
 ```text
-remote: error: GH006: Protected branch update failed for refs/heads/main.
-remote: error: Changes must be made through a pull request.
- ! [remote rejected] main -> main (protected branch hook declined)
+remote: error: GH013: Repository rule violations found for refs/heads/main.
+remote: Review all repository rules at https://github.com/LuisPratesDev/oauth-lab/rules?ref=refs%2Fheads%2Fmain
+remote:
+remote: - Changes must be made through a pull request.
+remote:
+remote: - Required status check "verificar" is expected.
+remote:
+To https://github.com/LuisPratesDev/oauth-lab.git
+ ! [remote rejected] main -> main (push declined due to repository rule violations)
+error: failed to push some refs to 'https://github.com/LuisPratesDev/oauth-lab.git'
 ```
 
 ---
