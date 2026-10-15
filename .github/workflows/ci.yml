@@ -1,0 +1,34 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+    branches: [main]
+
+jobs:
+  verificar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Procura segredos versionados
+        run: |
+          # GOCSPX[-] é o mesmo prefixo dos client secrets do Google escrito como
+          # classe de caracteres: assim a busca continua encontrando um segredo
+          # real, mas não acusa o próprio ci.yml (que contém o texto do padrão).
+          if git grep -nE "GOCSPX[-]|client_secret *= *['\"][^'\"]+" -- . ':!*.md'; then
+            echo "::error::Possível segredo no repositório"; exit 1
+          fi
+
+      - name: Aplica as migrações D1 em um SQLite local
+        run: |
+          rm -f teste.db
+          for f in migrations/*.sql; do
+            echo "::group::Aplicando $f"
+            sqlite3 teste.db < "$f"
+            echo "::endgroup::"
+          done
+          sqlite3 teste.db ".tables"
+
+      - name: Valida HTML
+        run: npx --yes htmlhint "**/*.html"
