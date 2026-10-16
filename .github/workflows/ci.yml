@@ -5,30 +5,42 @@ on:
   pull_request:
     branches: [main]
 
+permissions:
+  contents: read
+
 jobs:
   verificar:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - name: Baixar o repositório
+        uses: actions/checkout@v6
 
-      - name: Procura segredos versionados
+      - name: Conferir possíveis segredos versionados
+        shell: bash
         run: |
-          # GOCSPX[-] é o mesmo prefixo dos client secrets do Google escrito como
-          # classe de caracteres: assim a busca continua encontrando um segredo
-          # real, mas não acusa o próprio ci.yml (que contém o texto do padrão).
-          if git grep -nE "GOCSPX[-]|client_secret *= *['\"][^'\"]+" -- . ':!*.md'; then
-            echo "::error::Possível segredo no repositório"; exit 1
+          # Detecta padrões conhecidos sem imprimir os valores encontrados.
+          if git grep -qE "GOCSPX[-]|github_pat_[A-Za-z0-9_]+|client_secret[[:space:]]*=[[:space:]]*['\"][^'\"]+" -- . ':!*.md'; then
+            echo "::error::Há um possível segredo versionado. Revise os arquivos antes de prosseguir."
+            exit 1
           fi
 
-      - name: Aplica as migrações D1 em um SQLite local
+      - name: Verificar as migrações em SQLite local
+        shell: bash
         run: |
-          rm -f teste.db
-          for f in migrations/*.sql; do
-            echo "::group::Aplicando $f"
-            sqlite3 teste.db < "$f"
-            echo "::endgroup::"
+          set -euo pipefail
+          shopt -s nullglob
+          arquivos=(migrations/*.sql)
+          if [ ${#arquivos[@]} -eq 0 ]; then
+            echo "::error::Nenhuma migração .sql encontrada"
+            exit 1
+          fi
+          rm -f teste-ci.db
+          for arquivo in "${arquivos[@]}"; do
+            echo "Aplicando $arquivo"
+            sqlite3 teste-ci.db < "$arquivo"
           done
-          sqlite3 teste.db ".tables"
+          sqlite3 teste-ci.db '.tables'
+          rm -f teste-ci.db
 
-      - name: Valida HTML
-        run: npx --yes htmlhint "**/*.html"
+      - name: Verificar o HTML do site
+        run: npx --yes htmlhint "public/**/*.html"

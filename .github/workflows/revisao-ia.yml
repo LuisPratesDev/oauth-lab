@@ -1,0 +1,74 @@
+
+name: revisao-ia
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+  pull-requests: write
+  copilot-requests: write
+
+jobs:
+  revisar:
+    # Evita executar a revisao em PRs vindos de forks externos.
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Obter codigo do PR
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+
+      - name: Preparar Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+
+      - name: Instalar GitHub Copilot CLI
+        run: npm install -g @github/copilot
+
+      - name: Preparar diff e instrucoes da revisao
+        shell: bash
+        env:
+          BASE_REF: ${{ github.base_ref }}
+        run: |
+          set -euo pipefail
+
+          git fetch origin "$BASE_REF"
+          git diff "origin/$BASE_REF...HEAD" > alteracoes.diff
+
+          {
+            echo "Analise o diff deste Pull Request do projeto oauth-lab."
+            echo "O projeto utiliza OAuth, Cloudflare Pages, Functions e D1."
+            echo "Procure SQL Injection, segredos expostos e erros de logica."
+            echo "Verifique consultas SQL com interpolacao de variaveis."
+            echo "Explique os problemas em portugues, indicando arquivo e correcao."
+            echo "Nao invente vulnerabilidades e considere se o codigo e executado."
+            echo '```diff'
+            head -c 20000 alteracoes.diff
+            echo
+            echo '```'
+          } > prompt.txt
+
+      # Teste de autenticacao com GITHUB_TOKEN.
+      - name: Executar a revisao por IA
+        id: ia
+        uses: actions/ai-inference@v3
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          token: ${{ github.token }}
+          prompt-file: prompt.txt
+          model: ''
+          system-prompt: 'Voce e um revisor de codigo objetivo e cuidadoso.'
+
+      - name: Comentar a analise no PR
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          RESPOSTA: ${{ steps.ia.outputs.response-file }}
+        run: gh pr comment "$PR_NUMBER" --body-file "$RESPOSTA"
