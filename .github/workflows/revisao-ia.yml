@@ -1,3 +1,4 @@
+
 name: revisao-ia
 
 on:
@@ -7,14 +8,16 @@ on:
 permissions:
   contents: read
   pull-requests: write
+  copilot-requests: write
 
 jobs:
   revisar:
-    # PRs de forks não devem receber segredos de autenticação.
+    # Evita executar a revisao em PRs vindos de forks externos.
     if: github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
+
     steps:
-      - name: Obter código do PR
+      - name: Obter codigo do PR
         uses: actions/checkout@v6
         with:
           ref: ${{ github.event.pull_request.head.sha }}
@@ -25,40 +28,45 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Instalar o GitHub Copilot CLI
+      - name: Instalar GitHub Copilot CLI
         run: npm install -g @github/copilot
 
-      - name: Preparar diff e instruções da revisão
+      - name: Preparar diff e instrucoes da revisao
         shell: bash
         env:
           BASE_REF: ${{ github.base_ref }}
         run: |
           set -euo pipefail
+
           git fetch origin "$BASE_REF"
           git diff "origin/$BASE_REF...HEAD" > alteracoes.diff
+
           {
-            echo "Analise apenas o diff deste Pull Request de um site OAuth em Cloudflare Pages, Functions e D1."
-            echo "Procure primeiro SQL Injection e variáveis interpoladas dentro do texto de consultas SQL."
-            echo "Procure também segredos expostos, problemas de autorização e erros de lógica."
-            echo "Explique em português, com arquivo, motivo e sugestão objetiva. Não invente problemas."
-            echo "Informe quando um achado não for explorável no fluxo atual."
+            echo "Analise o diff deste Pull Request do projeto oauth-lab."
+            echo "O projeto utiliza OAuth, Cloudflare Pages, Functions e D1."
+            echo "Procure SQL Injection, segredos expostos e erros de logica."
+            echo "Verifique consultas SQL com interpolacao de variaveis."
+            echo "Explique os problemas em portugues, indicando arquivo e correcao."
+            echo "Nao invente vulnerabilidades e considere se o codigo e executado."
             echo '```diff'
             head -c 20000 alteracoes.diff
             echo
             echo '```'
           } > prompt.txt
 
-      - name: Executar a revisão por IA
+      # Teste de autenticacao com GITHUB_TOKEN.
+      - name: Executar a revisao por IA
         id: ia
         uses: actions/ai-inference@v3
         env:
-          COPILOT_GITHUB_TOKEN: ${{ secrets.COPILOT_PAT }}
+          GITHUB_TOKEN: ${{ github.token }}
         with:
+          token: ${{ github.token }}
           prompt-file: prompt.txt
           model: ''
-          system-prompt: 'Você é um revisor de código objetivo e cuidadoso.'
+          system-prompt: 'Voce e um revisor de codigo objetivo e cuidadoso.'
 
-      - name: Comentar a análise no PR
+      - name: Comentar a analise no PR
         env:
           GH_TOKEN: ${{ github.token }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
