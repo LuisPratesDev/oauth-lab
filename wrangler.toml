@@ -1,7 +1,5 @@
-# Configuração do projeto Cloudflare Pages (oauth-lab) usada pelo Wrangler.
-# O binding DB já existe no painel do Pages; ele é declarado aqui para que os
-# comandos de D1 (migrations apply/execute) encontrem o banco pelo nome.
-
+# Configuração existente do repositório LuisPratesDev/oauth-lab.
+# Binding DB da aplicação Cloudflare Pages.
 name = "oauth-lab"
 compatibility_date = "2026-09-18"
 pages_build_output_dir = "public"

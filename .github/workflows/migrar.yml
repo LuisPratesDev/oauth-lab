@@ -1,0 +1,81 @@
+name: Migrar D1
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'migrations/**'
+
+permissions:
+  contents: read
+
+jobs:
+  aplicar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar o repositório
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Preparar Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+
+      - name: Aplicar migrações no banco D1 remoto
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: npx --yes wrangler@4 d1 migrations apply oauth-sessions-luis_prates_dev --remote
+
+      # Etapas opcionais para o bônus de resumo por IA.
+      # Um erro do Copilot não deve desfazer uma migração já aplicada.
+      - name: Preparar resumo das mudanças SQL
+        shell: bash
+        env:
+          BEFORE_SHA: ${{ github.event.before }}
+        run: |
+          set -euo pipefail
+          if git cat-file -e "${BEFORE_SHA}^{commit}" 2>/dev/null; then
+            git diff "$BEFORE_SHA" HEAD -- migrations/ > mudancas-sql.diff
+          else
+            git show HEAD -- migrations/ > mudancas-sql.diff
+          fi
+          {
+            echo 'Resuma em português as alterações SQL implantadas nesta execução.'
+            echo 'Explique em até 5 tópicos os objetos alterados e o possível impacto.'
+            echo 'Não afirme que uma coluna foi criada sem evidência no diff.'
+            echo '```diff'
+            head -c 20000 mudancas-sql.diff
+            echo
+            echo '```'
+          } > resumo-prompt.txt
+
+      - name: Instalar Copilot CLI para o resumo opcional
+        run: npm install -g @github/copilot
+        continue-on-error: true
+
+      - name: Gerar resumo com IA (bônus)
+        id: resumo
+        uses: actions/ai-inference@v3
+        continue-on-error: true
+        env:
+          COPILOT_GITHUB_TOKEN: ${{ secrets.COPILOT_PAT }}
+        with:
+          prompt-file: resumo-prompt.txt
+          model: ''
+          system-prompt: 'Resuma migrações D1 com precisão e objetividade.'
+
+      - name: Publicar o resumo no GitHub Actions
+        if: always()
+        env:
+          RESPOSTA: ${{ steps.resumo.outputs.response-file }}
+        shell: bash
+        run: |
+          echo '## Migrações D1' >> "$GITHUB_STEP_SUMMARY"
+          if [ -n "$RESPOSTA" ] && [ -s "$RESPOSTA" ]; then
+            cat "$RESPOSTA" >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo 'Resumo da IA indisponível. Consulte o log do Wrangler acima.' >> "$GITHUB_STEP_SUMMARY"
+          fi
